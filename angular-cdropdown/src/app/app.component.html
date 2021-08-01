@@ -1,49 +1,70 @@
-//Angular 8
-<!--<style>
-  .content {
-    display: flex;
-    margin: 32px auto;
-    padding: 0 16px;
-    max-width: 960px;
-    flex-direction: column;
-    align-items: center;
-  }
-  .card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 16px;
-  }
-</style>-->
+<!-- app.component.html -->
 
-<div class="content">
-	<h2>Cascading or Dependent Dropdown using Angular 8/11</h2>
-	
-	<div class="card-container">
-		<label>Country</label>
-		<!--<select placeholder="Country" [(ngModel)]="selectedCountry" (change)="changeCountry($event.target.value)">--> //Angular 8
-		<select placeholder="Country" [(ngModel)]="selectedCountry" (change)="changeCountry($event)"> //Angular 11
-			<option>--Choose Country--</option>
-			<option *ngFor="let country of Countries">{{country.name}}</option>
-		</select>
-	</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-5">
+      <h1 class="page-title">Login</h1>
+      <form [formGroup]="loginForm">
 
-	<div class="card-container">
-		<label>State</label>
-		<!--<select placeholder="State" (change)="changeState($event.target.value)">--> //Angular 8
-		<select placeholder="State" (change)="changeState($event)"> //Angular 11
-			<option>--Choose State--</option>
-			<option *ngFor="let state of states">{{state.name}}</option>
-		</select>
-	</div>
-	
-	<div class="card-container">
-		<label>City</label>
-		<select placeholder="City">
-			<option>--Choose City--</option>
-			<option *ngFor="let city of cities">{{city}}</option>
-		</select>
-	</div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" formControlName="email">
+        </div>
+        <div *ngIf="isValidInput('email')" class="alert alert-danger">
+          <div *ngIf="loginForm.controls['email'].errors.required">
+            Email is required.
+          </div>
+          <div *ngIf="loginForm.controls['email'].errors.pattern">
+            Must be a valid email format.
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" formControlName="password">
+        </div>
+        <div *ngIf="isValidInput('password')" class="alert alert-danger">
+          <div *ngIf="loginForm.controls['password'].errors.required">
+            Password is required.
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label for="country">Country</label>
+
+          <select (change)="onSelect($event.target.value)" class="form-control" formControlName="country">
+            <option value="">--Select--</option>
+            <option *ngFor="let country of countries" value= {{country.id}}>{{country.name}}</option>
+          </select>
+
+        </div>
+
+        <div *ngIf="isValidInput('country')" class="alert alert-danger">
+          <div *ngIf="loginForm.controls['country'].errors.required">
+            Country is required.
+          </div>
+        </div>
+
+
+        <div class="form-group">
+        <label for="state">State:</label>
+        <select id="state" class="form-control" class="form-control" formControlName="state">
+          <option value="">--Select--</option>
+          <option *ngFor="let state of states " value= {{state.id}}>{{state.name}}</option>
+        </select>
+        </div>
+
+        <div *ngIf="isValidInput('state')" class="alert alert-danger">
+          <div *ngIf="loginForm.controls['state'].errors.required">
+            State is required.
+          </div>
+        </div>
+
+        <button [disabled]="!loginForm.valid" type="submit" class="btn btn-warning">Sign In</button>
+
+      </form>
+    </div>
+  </div>
 </div>
-
-<router-outlet></router-outlet>

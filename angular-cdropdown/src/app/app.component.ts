@@ -1,5 +1,12 @@
+// app.component.ts
+
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { CountryService } from '../app/Services/select.service';
+import { Country } from '../app/Classes/country-vm';
+import { State } from '../app/Classes/state-vm';
+
 
 @Component({
   selector: 'app-root',
@@ -7,39 +14,43 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-	
-	constructor(private title: Title) {}
+  loginForm: FormGroup;  
+  name = 'Angular 5';
+  countries: Country[];
+  states: State[];
 
-	ngOnInit() {
-		this.title.setTitle('Angular Cascading or Dependent Dropdown');
-	}
-	
-	selectedCountry: String = "--Choose Country--";
-  
-	Countries: Array<any> = [
-		{ name: 'Germany', states: [ {name: 'A', cities: ['Duesseldorf', 'Leinfelden-Echterdingen', 'Eschborn']} ] },
-		{ name: 'Spain', states: [ {name: 'B', cities: ['Barcelona']} ] },
-		{ name: 'USA', states: [ {name: 'C', cities: ['Downers Grove']} ] },
-		{ name: 'Mexico', states: [ {name: 'D', cities: ['Puebla']} ] },
-		{ name: 'India', states: [ {name: 'E', cities: ['Delhi', 'Kolkata', 'Mumbai', 'Bangalore']} ] },
-	];
-  
-    //states: Array<any>; //Angular 8
-	states: Array<any> = []; //Angular 11
+  constructor(private fb: FormBuilder, private selectService: CountryService) {
+  }
 
-	//cities: Array<any>; //Angular 8
-	cities: Array<any> = []; //Angular 11
-	
-	//changeCountry(country) { //Angular 8
-	changeCountry(country: any) { //Angular 11
-		//this.states = this.Countries.find(cntry => cntry.name == country).states; //Angular 8
-		this.states = this.Countries.find((cntry: any) => cntry.name == country.target.value).states; //Angular 11
-	}
+  ngOnInit(): void {
+    this.initForm();
+    this.countries = this.selectService.getCountries();
+  }
 
-	//changeState(state) { //Angular 8
-	changeState(state: any) { //Angular 11
-		//this.cities = this.Countries.find(cntry => cntry.name == this.selectedCountry).states.find(stat => stat.name == state).cities; //Angular 8
-		this.cities = this.Countries.find((cntry: any) => cntry.name == this.selectedCountry).states.find((stat: any) => stat.name == state.target.value).cities; //Angular 11
-	}
-	
+  onSelect(countryid) {
+    this.states = this.selectService.getStates().filter((item) => item.countryid == countryid);
+  }
+  initForm(): void {
+
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required,
+      Validators.pattern('^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$')]],
+      password: ['', Validators.required],
+      country: ['', Validators.required],
+      state: ['', Validators.required]
+
+    });
+
+  }
+
+  isValidInput(fieldName): boolean {    
+    return this.loginForm.controls[fieldName].invalid &&
+      (this.loginForm.controls[fieldName].dirty || this.loginForm.controls[fieldName].touched);
+  }
+
+  login(): void {
+    console.log(this.loginForm.value);
+  }
+
+
 }
