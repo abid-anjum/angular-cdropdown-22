@@ -3,34 +3,10 @@
 <div class="container">
   <div class="row">
     <div class="col-md-5">
-      <h1 class="page-title">Login</h1>
+      <h1 class="page-title">Angular master</h1>
       <form [formGroup]="loginForm">
 
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" class="form-control" formControlName="email">
-        </div>
-        <div *ngIf="isValidInput('email')" class="alert alert-danger">
-          <div *ngIf="loginForm.controls['email'].errors.required">
-            Email is required.
-          </div>
-          <div *ngIf="loginForm.controls['email'].errors.pattern">
-            Must be a valid email format.
-          </div>
-        </div>
-
-
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" class="form-control" formControlName="password">
-        </div>
-        <div *ngIf="isValidInput('password')" class="alert alert-danger">
-          <div *ngIf="loginForm.controls['password'].errors.required">
-            Password is required.
-          </div>
-        </div>
-
-
+    
         <div class="form-group">
           <label for="country">Country</label>
 
@@ -62,7 +38,7 @@
           </div>
         </div>
 
-        <button [disabled]="!loginForm.valid" type="submit" class="btn btn-warning">Sign In</button>
+        <button [disabled]="!loginForm.valid" type="submit" class="btn btn-warning">Submit</button>
 
       </form>
 
@@ -73,7 +49,9 @@
           <thead>
 
             <th>
-              <input type="checkbox" (click)="CheckAllOptions()" />
+              <label for="checkall"> Select All
+              <input id="checkall" type="checkbox" (click)="CheckAllOptions()" />
+              </label>
             </th>
             <th>Id</th>
             <th>Name</th>

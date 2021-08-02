@@ -32,10 +32,7 @@ export class AppComponent implements OnInit {
   }
   initForm(): void {
 
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required,
-      Validators.pattern('^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$')]],
-      password: ['', Validators.required],
+    this.loginForm = this.fb.group({     
       country: ['', Validators.required],
       state: ['', Validators.required]
 
