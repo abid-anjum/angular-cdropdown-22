@@ -14,7 +14,7 @@ import { State } from '../app/Classes/state-vm';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  loginForm: FormGroup;  
+  loginForm: FormGroup;
   name = 'Angular 5';
   countries: Country[];
   states: State[];
@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
 
   }
 
-  isValidInput(fieldName): boolean {    
+  isValidInput(fieldName): boolean {
     return this.loginForm.controls[fieldName].invalid &&
       (this.loginForm.controls[fieldName].dirty || this.loginForm.controls[fieldName].touched);
   }
@@ -52,5 +52,30 @@ export class AppComponent implements OnInit {
     console.log(this.loginForm.value);
   }
 
+  updateCountry(id: number) {
 
+    alert(id);
+  }
+
+  CheckAllOptions() {
+    if (this.countries.every(val => val.checked == true))
+      this.countries.forEach(val => { val.checked = false });
+    else
+      this.countries.forEach(val => { val.checked = true });
+  }
+  getSelected() {
+
+    debugger;
+    this.countries.forEach(val => {
+      if (val.checked == true) {
+        alert(val.id)
+      }
+    });
+
+
+  }
+
+  checkIfAllSelected(values: any) {
+    //alert(values.currentTarget.checked);
+  }
 }

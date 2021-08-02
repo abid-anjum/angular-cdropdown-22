@@ -7,8 +7,8 @@ export class SelectService {
 
   getCountries() {
     return [
-     new Country(1, 'USA' ),
-     new Country(2, 'Brazil' ),
+     new Country(1, 'USA', false),
+     new Country(2, 'Brazil', false),
     ];
   }
   

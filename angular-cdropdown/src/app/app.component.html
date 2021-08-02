@@ -36,7 +36,7 @@
 
           <select (change)="onSelect($event.target.value)" class="form-control" formControlName="country">
             <option value="">--Select--</option>
-            <option *ngFor="let country of countries" value= {{country.id}}>{{country.name}}</option>
+            <option *ngFor="let country of countries" value={{country.id}}>{{country.name}}</option>
           </select>
 
         </div>
@@ -49,11 +49,11 @@
 
 
         <div class="form-group">
-        <label for="state">State:</label>
-        <select id="state" class="form-control" class="form-control" formControlName="state">
-          <option value="">--Select--</option>
-          <option *ngFor="let state of states " value= {{state.id}}>{{state.name}}</option>
-        </select>
+          <label for="state">State:</label>
+          <select id="state" class="form-control" class="form-control" formControlName="state">
+            <option value="">--Select--</option>
+            <option *ngFor="let state of states " value={{state.id}}>{{state.name}}</option>
+          </select>
         </div>
 
         <div *ngIf="isValidInput('state')" class="alert alert-danger">
@@ -65,6 +65,36 @@
         <button [disabled]="!loginForm.valid" type="submit" class="btn btn-warning">Sign In</button>
 
       </form>
+
+
+      <h1>Angular Table</h1>
+      <div class="table-responsive">
+        <table id="mytable" class="table table-bordred table-striped">
+          <thead>
+
+            <th>
+              <input type="checkbox" (click)="CheckAllOptions()" />
+            </th>
+            <th>Id</th>
+            <th>Name</th>
+
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of countries">
+
+              <td><input type="checkbox" [(ngModel)]="item.checked" (change)="checkIfAllSelected($event);"></td>
+              <td>{{item.id}}</td>
+              <td>{{item.name}}</td>
+
+              <td><span class="btn btn-primary btn-xs" (click)="updateCountry(item.id)">
+                  <span class="glyphicon glyphicon-pencil"></span></span></td>
+
+            </tr>
+          </tbody>
+        </table>
+
+        <button class="btn btn-warning" (click)="getSelected()">Get Selected Rows</button>
+      </div>
     </div>
   </div>
 </div>
